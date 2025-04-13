@@ -1,11 +1,15 @@
 import tkinter as tk
 import tkinter.colorchooser
 from tkinter.colorchooser import askcolor
+from player import player1
+from player import player2
 
-class registerPlayers(tk.Tk, player1, player2):
+class registerPlayers(tk.Tk):
     def __init__(self):
         super().__init__()
         print("registerPlayers was called") # diagnostic print statement
+        print(player1.name)
+        print(player2.name)
         self.title("Register Players")
         # The actual labels, buttons, and entry boxes
         registerMessage = tk.Label(self, text='Please enter player names: ')
@@ -23,11 +27,7 @@ class registerPlayers(tk.Tk, player1, player2):
 
     def confirmPlayers(self):
         print("confirmPlayers was called")
-        """
-        global player1
-        global player2
-        player1 = self.player1Entry.get()
-        player2 = self.player2Entry.get()
-        print(player1, player2)
+        player1.name = self.player1Entry.get()
+        player2.name = self.player2Entry.get()
+        print(player1.name, player2.name)
         self.destroy()
-        """
