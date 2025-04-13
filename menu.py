@@ -36,6 +36,4 @@ def main():
 
 
 if __name__ == '__main__':
-    player1 = player.Player("Player 1", pg.color.Color(255, 255, 255))
-    player2 = player.Player("Player 2", pg.color.Color(255, 255, 255))
     main()
