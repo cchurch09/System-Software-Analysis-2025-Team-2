@@ -1,6 +1,6 @@
 """
 Project Name: Group2Project.py
-Author: Aisling Melody
+Author: Brenden Melody, Cailli Church, Darcy 
 Date last updated: 12 Oct 2024
 Description: Program is designed to play a version of Pong that allows players
             to choose their names and colors.
@@ -9,7 +9,6 @@ Description: Program is designed to play a version of Pong that allows players
 import tkinter as tk
 import PongExample2
 import registerPlayers
-import player
 import pygame as pg
 from tkinter import messagebox
 
