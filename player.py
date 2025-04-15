@@ -1,5 +1,3 @@
-import tkinter
-from tkinter import colorchooser
 import pygame as pg
 
 class Player():
