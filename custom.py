@@ -2,14 +2,9 @@ import tkinter as tk
 import player
 from tkinter import messagebox
 
-
-def main():
-    customMenu = tk.Tk()
-    customMenu.title("Customization Menu")
-    customMenu.geometry("500x500")
-    windowButton = tk.Button(customMenu, "Change window size", )
-    
-    
-
-if __name__ == '__main__':
-    main()
+class customMenu(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Customization Menu")
+        windowButton = tk.Button(self, "Change window size")
+        windowButton.pack()
