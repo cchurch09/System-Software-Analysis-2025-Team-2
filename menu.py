@@ -9,7 +9,7 @@ Description: Program is designed to play a version of Pong that allows players
 import tkinter as tk
 import PongExample2
 import registerPlayers
-import custom
+import customMenu
 import player
 import pygame as pg
 from tkinter import messagebox
@@ -26,7 +26,7 @@ def main():
     multiButton = tk.Button(mainMenu, text="Play Pygame Game", command=lambda: PongExample2.main())
     tkinterButton = tk.Button(mainMenu, text="Play tkinter game")
     registryButton = tk.Button(mainMenu, text="Register Players", command=lambda: registerPlayers.registerPlayers())
-    customButton = tk.Button(mainMenu, text ="Customization Menu", command=lambda: custom.customMenu())
+    customButton = tk.Button(mainMenu, text ="Customization Menu", command=lambda: customMenu.customMenu())
     exitButton = tk.Button(mainMenu, text="Exit", command=mainMenu.quit)
 
     welcomeMessage.pack()
