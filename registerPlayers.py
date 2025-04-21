@@ -25,6 +25,7 @@ class registerPlayers(tk.Tk):
         player1Color.pack()
         player2Label.pack()
         self.player2Entry.pack()
+        player2Color.pack()
         confirmButton.pack()
 
     def chooseColor(self, playerColor):
