@@ -1,6 +1,6 @@
 """
 Project Name: Group2Project.py
-Author: Aisling Melody, Darcy Ralstin, Cailli Church
+Author: Brenden Melody, Darcy Ralstin, Cailli Church
 Date last updated: 13 April 2025
 Description: Program is designed to play a version of Pong that allows players
             to choose their names and colors.
