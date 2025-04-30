@@ -31,7 +31,7 @@ class registerPlayers(tk.Tk):
     def chooseColor(self, playerColor):
         color_code = colorchooser.askcolor(title="Pick Player Color")
         print(color_code)
-        playerColor = color_code
+        playerColor = color_code[1]
         print(playerColor)
 
 
