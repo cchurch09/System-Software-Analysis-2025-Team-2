@@ -1,6 +1,4 @@
 import pygame
-from player import player1
-from player import player2
 
 class Paddle:
     def __init__(self, x, y, width, height):
