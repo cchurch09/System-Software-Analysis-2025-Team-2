@@ -2,6 +2,7 @@ import pygame
 import paddle
 import ball
 from player import players
+from ball import ball1
 
 GAME_WIDTH = 700
 GAME_HEIGHT = 500
@@ -40,12 +41,23 @@ class Game:
 
         pygame.display.update()
 
+    def paddle_movement(keys, left_paddle, right_paddle):
+        if keys[pygame.K_w] and left_paddle.y - left_paddle.VELOCITY >= 0:
+            left_paddle.move(up=True)
+        if keys[pygame.K_s] and left_paddle.y + left_paddle.VELOCITY + left_paddle.height <= GAME_HEIGHT:
+            left_paddle.move(up=False)
+
+        if keys[pygame.K_UP] and right_paddle.y - right_paddle.VELOCITY >= 0:
+            right_paddle.move(up=True)
+        if keys[pygame.K_DOWN] and right_paddle.y + right_paddle.VELOCITY + right_paddle.height <= GAME_HEIGHT:
+            right_paddle.move(up=False)
+
 
     def main(self):
         run = True
         clock = pygame.time.Clock()
 
-        right_paddle = paddle.Paddle(625, 400, 20, 70)
+        right_paddle = paddle.Paddle(630, 400, 20, 70)
         left_paddle = paddle.Paddle(50, 400, 20, 70)
 
         player1_score = 0
@@ -61,6 +73,9 @@ class Game:
                     break
             
             keys = pygame.key.get_pressed()
+            self.paddle_movement(keys, left_paddle, right_paddle)
+
+            """ball.Ball.render(GAME_WIN, ball1)"""
 
 game1 = Game
 Game.main(game1)

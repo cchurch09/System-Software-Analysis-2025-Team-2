@@ -1,6 +1,8 @@
 import pygame
 
 class Paddle:
+    VELOCITY = 4
+
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
@@ -12,6 +14,6 @@ class Paddle:
 
     def move(self, up=True):
         if up:
-            self.y -= self.velocity
+            self.y -= self.VELOCITY
         else:
-            self.y += self.velocity
+            self.y += self.VELOCITY
