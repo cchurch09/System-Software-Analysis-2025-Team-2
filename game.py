@@ -1,5 +1,6 @@
 import pygame
-import paddle
+#import paddle
+import paddle2
 import ball
 from player import players
 
@@ -45,8 +46,8 @@ class Game:
         run = True
         clock = pygame.time.Clock()
 
-        right_paddle = paddle.Paddle(625, 400, 20, 70)
-        left_paddle = paddle.Paddle(50, 400, 20, 70)
+        right_paddle = paddle2.Paddle(625, 400, 20, 70)
+        left_paddle = paddle2.Paddle(50, 400, 20, 70)
 
         player1_score = 0
         player2_score = 0
