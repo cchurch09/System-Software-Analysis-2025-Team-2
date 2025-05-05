@@ -2,8 +2,10 @@ import pygame
 #import paddle
 import paddle2
 import ball
+import ball2
 from player import players
 from ball import ball1
+import customizaton
 
 GAME_WIDTH = 700
 GAME_HEIGHT = 500
@@ -58,15 +60,18 @@ class Game:
         run = True
         clock = pygame.time.Clock()
 
-        right_paddle = paddle2.Paddle(630, 400, 20, 70)
-        left_paddle = paddle2.Paddle(50, 400, 20, 70)
+        balls = []
+        right_paddle = paddle2.Paddle(630, 400, 20, 70, players[1].color)
+        left_paddle = paddle2.Paddle(50, 400, 20, 70, players[0].color)
+        for i in range(customizaton.ballCount):
+            balls[i] = ball2(GAME_WIDTH//2, GAME_HEIGHT//2, 10, ball2.ballColor)
 
         player1_score = 0
         player2_score = 0
 
         while run:
             clock.tick(100)
-            self.render(GAME_WIN, [left_paddle, right_paddle], ball, player1_score, player2_score)
+            self.render(GAME_WIN, [left_paddle, right_paddle], balls[i], player1_score, player2_score)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

@@ -3,7 +3,7 @@ import pygame
 class Paddle(pygame.sprite.Sprite):
     VELOCITY = 5 
 
-    def __init__(self, x, y, width, height, color=(255, 255, 255)):
+    def __init__(self, x, y, width, height, color):
         super().__init__()
         self.image = pygame.Surface([width, height])
         self.image.fill(color)

@@ -1,8 +1,9 @@
 import tkinter as tk
 import player
-import ball
+import ball2
 from tkinter import messagebox
 from tkinter import colorchooser
+import customization
 
 class customMenu(tk.Tk):
     def __init__(self):
@@ -10,7 +11,7 @@ class customMenu(tk.Tk):
         self.title("Customization Menu")
         rotatePaddlesOn = tk.Button(self, text="Turn on rotating paddles")
         rotatePaddlesOff = tk.Button(self, text="Turn off rotating paddles")
-        ballColor = tk.button(self, text="Choose Ball Color", command=lambda: self.ballColor(ball.ball1.color))
+        ballColor = tk.button(self, text="Choose Ball Color", command=lambda: self.ballColor(ball2.ball.color))
         rotatePaddlesOn.pack()
         rotatePaddlesOff.pack()
         ballColor.pack()
@@ -21,3 +22,5 @@ class customMenu(tk.Tk):
         ballColor = color_code[1]
         print(color_code)
         print(ballColor)
+
+customGame = customization()
