@@ -58,7 +58,7 @@ class Game:
         run = True
         clock = pygame.time.Clock()
 
-        right_paddle = paddle2.Paddle(625, 400, 20, 70)
+        right_paddle = paddle2.Paddle(630, 400, 20, 70)
         left_paddle = paddle2.Paddle(50, 400, 20, 70)
 
         player1_score = 0
