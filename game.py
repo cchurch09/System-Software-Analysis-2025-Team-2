@@ -5,7 +5,7 @@ import ball
 import ball2
 from player import players
 from ball import ball1
-import customizaton
+from customMenu import customGame
 
 GAME_WIDTH = 700
 GAME_HEIGHT = 500
@@ -63,7 +63,7 @@ class Game:
         balls = []
         right_paddle = paddle2.Paddle(630, 400, 20, 70, players[1].color)
         left_paddle = paddle2.Paddle(50, 400, 20, 70, players[0].color)
-        for i in range(customizaton.ballCount):
+        for i in range(customGame.ballCount):
             balls[i] = ball2(GAME_WIDTH//2, GAME_HEIGHT//2, 10, ball2.ballColor)
 
         player1_score = 0
