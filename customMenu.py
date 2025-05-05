@@ -23,4 +23,4 @@ class customMenu(tk.Tk):
         print(color_code)
         print(ballColor)
 
-customGame = customization()
+customGame = customization.Customization()
