@@ -1,7 +1,7 @@
 import pygame
 
 class Paddle(pygame.sprite.Sprite):
-    VEL = 5 
+    VELOCITY = 5 
 
     def __init__(self, x, y, width, height, color=(255, 255, 255)):
         super().__init__()
@@ -21,6 +21,6 @@ class Paddle(pygame.sprite.Sprite):
 
     def move(self, up=True):
         if up:
-            self.rect.y -= self.VEL
+            self.rect.y -= self.VELOCITY
         else:
-            self.rect.y += self.VEL
+            self.rect.y += self.VELOCITY

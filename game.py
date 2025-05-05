@@ -43,14 +43,14 @@ class Game:
         pygame.display.update()
 
     def paddle_movement(keys, left_paddle, right_paddle):
-        if keys[pygame.K_w] and left_paddle.y - left_paddle.VELOCITY >= 0:
+        if keys[pygame.K_w] and left_paddle.rect.y - left_paddle.VELOCITY >= 0:
             left_paddle.move(up=True)
-        if keys[pygame.K_s] and left_paddle.y + left_paddle.VELOCITY + left_paddle.height <= GAME_HEIGHT:
+        if keys[pygame.K_s] and left_paddle.rect.y + left_paddle.VELOCITY + left_paddle.height <= GAME_HEIGHT:
             left_paddle.move(up=False)
 
-        if keys[pygame.K_UP] and right_paddle.y - right_paddle.VELOCITY >= 0:
+        if keys[pygame.K_UP] and right_paddle.rect.y - right_paddle.VELOCITY >= 0:
             right_paddle.move(up=True)
-        if keys[pygame.K_DOWN] and right_paddle.y + right_paddle.VELOCITY + right_paddle.height <= GAME_HEIGHT:
+        if keys[pygame.K_DOWN] and right_paddle.rect.y + right_paddle.VELOCITY + right_paddle.height <= GAME_HEIGHT:
             right_paddle.move(up=False)
 
 
