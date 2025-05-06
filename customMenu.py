@@ -9,12 +9,27 @@ class customMenu(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Customization Menu")
-        rotatePaddlesOn = tk.Button(self, text="Turn on rotating paddles")
-        rotatePaddlesOff = tk.Button(self, text="Turn off rotating paddles")
-        ballColor = tk.button(self, text="Choose Ball Color", command=lambda: self.ballColor(customGame.ballColor))
+        
+        # Paddle rotation buttons
+        rotatePaddlesOn = tk.Button(self, text="Turn On Rotating Paddles")
+        rotatePaddlesOff = tk.Button(self, text="Turn Off Rotating Paddles")
         rotatePaddlesOn.pack()
         rotatePaddlesOff.pack()
+        
+        # Ball color customization
+        ballColor = tk.Button(self, text="Choose Ball Color", command=lambda: self.ballColor(ball2.Ball.color))
         ballColor.pack()
+        
+        # Dropdown menu for  of balls
+        tk.Label(self, text="How many balls would you like to display?").pack(pady=10)
+        options = ["1", "2", "3"]
+        self.selected_option = tk.StringVar(value=options[0])
+        ballNum = tk.OptionMenu(self, self.selected_option, *options)
+        ballNum.pack()
+        
+        # Confirm button to set ball count in game
+        confirm_button = tk.Button(self, text="OK")
+        confirm_button.pack()
 
 
     def ballColor(self, ballColor):
@@ -22,3 +37,7 @@ class customMenu(tk.Tk):
         ballColor = color_code[1]
         print(color_code)
         print(ballColor)
+        
+if __name__ == '__main__':
+    app = customMenu()
+    app.mainloop()
