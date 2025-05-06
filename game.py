@@ -4,6 +4,7 @@ import paddle2
 import ball2
 from player import players
 from customMenu import customGame
+from ball2 import ball_sprites
 
 GAME_WIDTH = 700
 GAME_HEIGHT = 500
@@ -35,25 +36,18 @@ class Game:
         window.blit(player1_score_text, (50, 20))
         window.blit(player2_score_text, (625, 20))
 
-        i = 0
+        p = 0
         for paddle in paddles:
             print("Calling render paddles")
-            paddle.render(window, players[i].color)
-            if i == 0:
-                i = 1
-            if i == 1:
-                i = 0
+            paddle.render(window, players[p].color)
+            if p == 0:
+                p = 1
+            if p == 1:
+                p = 0
             else:
                 print("i index error")
 
-        """
-        for ball in balls:
-            pygame.draw.circle(ball)
-            print("calling render balls")
-            ball.render(window)
-        """
-
-        ball.render(window)
+        ball_sprites.draw(GAME_WIN)
         pygame.display.update()
 
     def paddle_movement(keys, left_paddle, right_paddle):
@@ -75,17 +69,17 @@ class Game:
         balls = []
         right_paddle = paddle2.Paddle(630, 400, 20, 70, players[1].color)
         left_paddle = paddle2.Paddle(50, 400, 20, 70, players[0].color)
-        for i in range(customGame.ballCount - 1):
-            balls[i] = ball2.Ball(450, 250, 10, 10, customGame.ballColor)
-
-        ball = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 10, 10, customGame.ballColor)
+        ballProto = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
+        for i in range(customGame.ballCount):
+            ball = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
+            ball_sprites.add(ball)
 
         player1_score = 0
         player2_score = 0
 
         while run:
             clock.tick(100)
-            self.render(GAME_WIN, [left_paddle, right_paddle], player1_score, player2_score, ball)
+            self.render(GAME_WIN, [left_paddle, right_paddle], player1_score, player2_score, balls)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -95,9 +89,10 @@ class Game:
             keys = pygame.key.get_pressed()
             self.paddle_movement(keys, left_paddle, right_paddle)
 
-            ball.move()
-
-            """ball.Ball.render(GAME_WIN, ball1)"""
+            for ball in ball_sprites:
+                ball.move()
+            ball_sprites.draw(GAME_WIN)
+            GAME_WIN.fill((BLACK))
 
 game1 = Game
 Game.main(game1)
