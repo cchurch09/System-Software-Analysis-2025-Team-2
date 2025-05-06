@@ -81,6 +81,7 @@ def draw(win, paddles, ball, left_score, right_score):
     win.blit(right_score_text, (WIDTH * (3/4) - right_score_text.get_width()//2, 20))
 
     for paddle in paddles:
+        print("rendering paddles")
         paddle.draw(win)
 
     for i in range(10, HEIGHT, HEIGHT//20):
@@ -88,6 +89,7 @@ def draw(win, paddles, ball, left_score, right_score):
             continue
         pygame.draw.rect(win, WHITE, (WIDTH//2 - 5, i, 10, HEIGHT//20))
 
+    print("rendering ball")
     ball.draw(win)
     pygame.display.update()
 

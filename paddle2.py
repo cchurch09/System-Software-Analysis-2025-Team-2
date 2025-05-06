@@ -12,7 +12,7 @@ class Paddle(pygame.sprite.Sprite):
         self.height = height
         self.color = color
 
-    def render(self, window, color=None):
+    def render(self, window, color):
         if color:
             self.image.fill(color)
         else:

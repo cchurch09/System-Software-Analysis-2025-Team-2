@@ -1,29 +1,29 @@
 import pygame
 
 class Ball(pygame.sprite.Sprite):
-    VEL = 5
+    VEL = 10
 
     def __init__(self, x, y, width, height, color):
         super().__init__()
+        self.width = height
+        self.height = width
         self.x = self.center_x = x
         self.y = self.center_y = y
-        self.image = pygame.surface([width, height])
+        self.color = color
+        self.image = pygame.Surface([width, height])
         self.image.fill(color)
         self.rect = self.image.get_rect(topleft=(x,y))
-        self.width = width
-        self.height = height
-        self.color = color
+        self.x_velocity = self.VEL
+        self.y_velocity = 0
 
-    def render(self, window, color):
-        if color:
-            self.image.fill(color)
-        else:
-            self.image.fill(self.color)
-        window.blit(self.image, self.rect)
+    def render(self, window):
+        print("render ball called")
+        pygame.draw.circle(window, self.color, (self.center_x, self.center_y), self.width)
+
 
     def move(self):
-        self.x += self.x_vel
-        self.y += self.y_vel
+        self.x += self.x_velocity
+        self.y += self.y_velocity
 
     def restart(self):
         self.x = self.center_x

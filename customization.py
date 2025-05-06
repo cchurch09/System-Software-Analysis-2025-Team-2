@@ -6,11 +6,14 @@ Purpose: This module facilitates all of the customization options via boolean va
 """
 
 
-class customization():
+class Customization():
     def __init__(self):
         self.paddleRotation = False
         self.multiBall = False
         self.ballCount = 1
+        self.ballColor = (255, 255, 255)
         self.rallyMode = False
         self.singleRally = False
         self.freePlay = False
+
+customGame = Customization()
