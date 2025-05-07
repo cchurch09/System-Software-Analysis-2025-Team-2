@@ -19,6 +19,9 @@ WIN_SCORE = 10
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
+PADDLE_WIDTH = 20
+PADDLE_HEIGHT = 70
+
 class Game:
     def render(window, paddles, player1_score, player2_score, rally_score):
         window.fill(BLACK)
@@ -66,6 +69,17 @@ class Game:
             right_paddle.move(up=True)
         if keys[pygame.K_DOWN] and right_paddle.rect.y + right_paddle.VELOCITY + right_paddle.height <= GAME_HEIGHT:
             right_paddle.move(up=False)
+        
+        # Rotation    
+        if keys[pygame.K_a]: 
+            left_paddle.rotate(-5)
+        if keys[pygame.K_d]:
+            left_paddle.rotate(5)
+
+        if keys[pygame.K_LEFT]:
+            right_paddle.rotate(-5)
+        if keys[pygame.K_RIGHT]:
+            right_paddle.rotate(5)
 
 
     def main(self):
@@ -81,6 +95,9 @@ class Game:
         else:
             right_paddle = paddle2.Paddle(630, 225, 20, 70, players[1].color)
             left_paddle = paddle2.Paddle(50, 225, 20, 70, players[0].color)
+        balls = []
+        left_paddle = paddle2.Paddle(50, (GAME_HEIGHT // 2) - (PADDLE_HEIGHT // 2), PADDLE_WIDTH, PADDLE_HEIGHT, players[0].color)
+        right_paddle = paddle2.Paddle(GAME_WIDTH - 50 - PADDLE_WIDTH, (GAME_HEIGHT // 2) - (PADDLE_HEIGHT // 2), PADDLE_WIDTH, PADDLE_HEIGHT, players[1].color)
         ballProto = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
         for i in range(customGame.ballCount):
             ball = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
