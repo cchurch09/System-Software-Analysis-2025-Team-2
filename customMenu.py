@@ -19,8 +19,8 @@ class customMenu(tk.Tk):
 
         
         # Paddle rotation buttons
-        rotatePaddlesOn = tk.Button(self, text="Turn On Rotating Paddles")
-        rotatePaddlesOff = tk.Button(self, text="Turn Off Rotating Paddles")
+        rotatePaddlesOn = tk.Button(self, text="Turn On Rotating Paddles", command=lambda: customGame.paddleRotation(True))
+        rotatePaddlesOff = tk.Button(self, text="Turn Off Rotating Paddles", command=lambda: customGame.paddleRotation(False))
         rotatePaddlesOn.pack()
         rotatePaddlesOff.pack()
         
