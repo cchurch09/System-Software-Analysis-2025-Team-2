@@ -47,7 +47,7 @@ class Game:
 
         p = 0
         for paddle in paddles:
-            print("Calling render paddles")
+            """print("Calling render paddles")"""
             paddle.render(window, players[p].color)
             if p == 0:
                 p = 1
@@ -65,21 +65,24 @@ class Game:
         if keys[pygame.K_s] and left_paddle.rect.y + left_paddle.VELOCITY + left_paddle.height <= GAME_HEIGHT:
             left_paddle.move(up=False)
 
-        if keys[pygame.K_UP] and right_paddle.rect.y - right_paddle.VELOCITY >= 0:
-            right_paddle.move(up=True)
-        if keys[pygame.K_DOWN] and right_paddle.rect.y + right_paddle.VELOCITY + right_paddle.height <= GAME_HEIGHT:
-            right_paddle.move(up=False)
+        if customGame.singleRally == False:
+            if keys[pygame.K_UP] and right_paddle.rect.y - right_paddle.VELOCITY >= 0:
+                right_paddle.move(up=True)
+            if keys[pygame.K_DOWN] and right_paddle.rect.y + right_paddle.VELOCITY + right_paddle.height <= GAME_HEIGHT:
+                right_paddle.move(up=False)
         
         # Rotation    
-        if keys[pygame.K_a]: 
-            left_paddle.rotate(-5)
-        if keys[pygame.K_d]:
-            left_paddle.rotate(5)
+        if customGame.paddleRotation == True:
+            if keys[pygame.K_a]: 
+                left_paddle.rotate(-5)
+            if keys[pygame.K_d]:
+                left_paddle.rotate(5)
 
-        if keys[pygame.K_LEFT]:
-            right_paddle.rotate(-5)
-        if keys[pygame.K_RIGHT]:
-            right_paddle.rotate(5)
+            if customGame.singleRally == False:
+                if keys[pygame.K_LEFT]:
+                    right_paddle.rotate(-5)
+                if keys[pygame.K_RIGHT]:
+                    right_paddle.rotate(5)
 
 
     def main(self):
