@@ -1,7 +1,7 @@
 import pygame
 
 class Ball(pygame.sprite.Sprite):
-    VEL = 10
+    VEL = 5
 
     def __init__(self, x, y, radius, color):
         super().__init__()

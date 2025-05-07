@@ -9,6 +9,14 @@ class customMenu(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Customization Menu")
+
+        # Game Mode Selection
+        tk.Label(self, text="Please Choose Game Mode").pack(pady=10)
+        gameModes = ["Standard", "2-Player Rally", "1-Player Rally"]
+        self.selected_mode = tk.StringVar(value=gameModes[0])
+        modeNum = tk.OptionMenu(self, self.selected_mode, *gameModes)
+        modeNum.pack()
+
         
         # Paddle rotation buttons
         rotatePaddlesOn = tk.Button(self, text="Turn On Rotating Paddles")

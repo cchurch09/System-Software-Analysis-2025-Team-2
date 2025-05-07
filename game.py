@@ -20,11 +20,20 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 class Game:
-    def render(window, paddles, player1_score, player2_score, ball):
+    def render(window, paddles, player1_score, player2_score, rally_score):
         window.fill(BLACK)
 
-        player1_score_text = GAME_FONT_2.render(f"{player1_score}", 1, players[0].color)
-        player2_score_text = GAME_FONT_2.render(f"{player2_score}", 1, players[1].color)
+        if customGame.rallyMode == True:
+            rally_score_text = GAME_FONT_2.render(f"{rally_score}", 1, WHITE)
+            window.blit(rally_score_text, (GAME_WIDTH//2, 20))
+        if customGame.singleRally == True:
+            rally_score_text = GAME_FONT_2.render(f"{rally_score}", 1, WHITE)
+            window.blit(rally_score_text, (GAME_WIDTH//2, 20))
+        elif customGame.rallyMode == False & customGame.singleRally == False:
+            player1_score_text = GAME_FONT_2.render(f"{player1_score}", 1, players[0].color)
+            player2_score_text = GAME_FONT_2.render(f"{player2_score}", 1, players[1].color)
+            window.blit(player1_score_text, (50, 20))
+            window.blit(player2_score_text, (625, 20))
 
         """
         player1_text = player.player1.name
@@ -32,9 +41,6 @@ class Game:
         player1_score_text = pygame.font.Font('fonts\ozone\Ozone-xRRO.ttf', 50).render(f"{player1_score}", 1, (255, 255, 255))
         player2_score_text = pygame.font.Font('fonts\ozone\Ozone-xRRO.ttf', 50).render(f"{player2_score}", 1, (255, 255, 255))
         """
-
-        window.blit(player1_score_text, (50, 20))
-        window.blit(player2_score_text, (625, 20))
 
         p = 0
         for paddle in paddles:
@@ -66,9 +72,15 @@ class Game:
         run = True
         clock = pygame.time.Clock()
 
-        balls = []
-        right_paddle = paddle2.Paddle(630, 400, 20, 70, players[1].color)
-        left_paddle = paddle2.Paddle(50, 400, 20, 70, players[0].color)
+        if customGame.singleRally == True:
+            right_paddle = paddle2.Paddle(630, 0, 20, GAME_HEIGHT, players[1].color)
+            left_paddle = paddle2.Paddle(50, 225, 20, 70, players[0].color)
+        elif customGame.rallyMode == True:
+            right_paddle = paddle2.Paddle(630, 225, 20, 70, players[1].color)
+            left_paddle = paddle2.Paddle(50, 225, 20, 70, players[0].color)
+        else:
+            right_paddle = paddle2.Paddle(630, 225, 20, 70, players[1].color)
+            left_paddle = paddle2.Paddle(50, 225, 20, 70, players[0].color)
         ballProto = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
         for i in range(customGame.ballCount):
             ball = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
@@ -76,10 +88,11 @@ class Game:
 
         player1_score = 0
         player2_score = 0
+        rally_score = 0
 
         while run:
             clock.tick(100)
-            self.render(GAME_WIN, [left_paddle, right_paddle], player1_score, player2_score, balls)
+            self.render(GAME_WIN, [left_paddle, right_paddle], player1_score, player2_score, rally_score)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
