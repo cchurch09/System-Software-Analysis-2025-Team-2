@@ -29,8 +29,8 @@ class Ball(pygame.sprite.Sprite):
     def restart(self):
         self.x = self.center_x
         self.y = self.center_y
-        self.y_vel = 0
-        self.x_vel *= -1
+        self.y_velocity = 0
+        self.x_velocity *= -1
 
 
 ball_sprites = pygame.sprite.Group()

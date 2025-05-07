@@ -14,8 +14,8 @@ class customMenu(tk.Tk):
         tk.Label(self, text="Please Choose Game Mode").pack(pady=10)
         gameModes = ["Standard", "2-Player Rally", "1-Player Rally"]
         self.selected_mode = tk.StringVar(value=gameModes[0])
-        modeNum = tk.OptionMenu(self, self.selected_mode, *gameModes)
-        modeNum.pack()
+        modeChoice = tk.OptionMenu(self, self.selected_mode, *gameModes)
+        modeChoice.pack()
 
         
         # Paddle rotation buttons
@@ -45,6 +45,9 @@ class customMenu(tk.Tk):
         ballColor = color_code[1]
         print(color_code)
         print(ballColor)
+
+    def on_select(event):
+        selection = modeChoice.get()
         
 if __name__ == '__main__':
     app = customMenu()

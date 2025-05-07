@@ -2,6 +2,7 @@ import pygame
 #import paddle
 import paddle2
 import ball2
+import math
 from player import players
 from customMenu import customGame
 from ball2 import ball_sprites
@@ -32,7 +33,7 @@ class Game:
         if customGame.singleRally == True:
             rally_score_text = GAME_FONT_2.render(f"{rally_score}", 1, WHITE)
             window.blit(rally_score_text, (GAME_WIDTH//2, 20))
-        elif customGame.rallyMode == False & customGame.singleRally == False:
+        elif customGame.rallyMode == False and customGame.singleRally == False:
             player1_score_text = GAME_FONT_2.render(f"{player1_score}", 1, players[0].color)
             player2_score_text = GAME_FONT_2.render(f"{player2_score}", 1, players[1].color)
             window.blit(player1_score_text, (50, 20))
@@ -126,6 +127,14 @@ class Game:
 
             for ball in ball_sprites:
                 ball.move()
+
+                # Check if the ball goes out of bounds
+                if ball.rect.left < 0 or ball.rect.right > GAME_WIDTH:
+                    if ball.rect.left < 0:
+                        player2_score += 1
+                    elif ball.rect.right > GAME_WIDTH:
+                        player1_score += 1
+                    ball.restart()  # Reset the ball position
            
            # Collision     
             for paddle in [left_paddle, right_paddle]:
@@ -137,6 +146,16 @@ class Game:
                         relative_intersect = (ball.rect.centery - paddle.rect.centery) / (paddle.height / 2)
                         bounce_strength = 2
                         ball.y_velocity = int(relative_intersect * bounce_strength)
+
+            """
+            for ball in ball_sprites:
+                if ball.x < 0:
+                    player2_score += 1
+                    
+                elif ball.x > GAME_WIDTH:
+                    player1_score += 1
+                    ball.restart()
+            """
             ball_sprites.draw(GAME_WIN)
             GAME_WIN.fill((BLACK))
 
