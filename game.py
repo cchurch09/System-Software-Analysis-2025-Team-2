@@ -133,11 +133,19 @@ class Game:
                     if ball.mask.overlap(paddle.mask, offset):
                         print("Collision detected with paddle!")
                         ball.x_velocity *= -1
+                        '''
+                        # Sticking fix
+                        # Basically - if ball is moving right, keep it to the left of the paddle
+                        if ball.x_velocity > 0:
+                            ball.rect.left = paddle.rect.right
+                        else:
+                            ball.rect.right = paddle.rect.left
+                        '''    
                         # Where is the ball hitting the paddle?
                         relative_intersect = (ball.rect.centery - paddle.rect.centery) / (paddle.height / 2)
                         bounce_strength = 2
                         ball.y_velocity = int(relative_intersect * bounce_strength)
-                        
+  
             # Keep ball within bounds of screen (Top and bottom)            
             if ball.rect.top <= 0:
                 ball.rect.top = 0
