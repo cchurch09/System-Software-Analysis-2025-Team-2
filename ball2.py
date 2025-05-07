@@ -1,7 +1,7 @@
 import pygame
 
 class Ball(pygame.sprite.Sprite):
-    VEL = 10
+    VEL = 5
 
     def __init__(self, x, y, radius, color):
         super().__init__()
@@ -12,6 +12,7 @@ class Ball(pygame.sprite.Sprite):
         self.image = pygame.Surface([radius * 2, radius * 2], pygame.SRCALPHA)
         self.image.fill(color)
         self.rect = self.image.get_rect(topleft=(x,y))
+        self.mask = pygame.mask.from_surface(self.image)
         self.x_velocity = self.VEL
         self.y_velocity = 0
 
@@ -19,6 +20,7 @@ class Ball(pygame.sprite.Sprite):
         print("render ball called")
         pygame.draw.circle(self.image, self.color, (self.center_x, self.center_y), self.radius)
         self.rect = self.image.get_rect(center=(self.center_x, self.center_y))
+        window.blit(self.image, self.rect)
 
     def move(self):
         self.rect.x += self.x_velocity

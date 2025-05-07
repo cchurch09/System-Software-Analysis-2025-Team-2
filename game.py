@@ -105,6 +105,17 @@ class Game:
 
             for ball in ball_sprites:
                 ball.move()
+           
+           # Collision     
+            for paddle in [left_paddle, right_paddle]:
+                    offset = (paddle.rect.x - ball.rect.x, paddle.rect.y - ball.rect.y)
+                    if ball.mask.overlap(paddle.mask, offset):
+                        print("Collision detected with paddle!")
+                        ball.x_velocity *= -1
+                        # Where is the ball hitting the paddle?
+                        relative_intersect = (ball.rect.centery - paddle.rect.centery) / (paddle.height / 2)
+                        bounce_strength = 2
+                        ball.y_velocity = int(relative_intersect * bounce_strength)
             ball_sprites.draw(GAME_WIN)
             GAME_WIN.fill((BLACK))
 
