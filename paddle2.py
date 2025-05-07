@@ -1,12 +1,11 @@
 import pygame
 
 class Paddle(pygame.sprite.Sprite):
-    VELOCITY = 5 
+    VELOCITY = 3
     
     def __init__(self, x, y, width, height, color):
         super().__init__()
         self.original_image = pygame.Surface([width, height], pygame.SRCALPHA)
-        pygame.draw.rect(self.original_image, color, (0, 0, width, height))
         self.image = self.original_image.copy()
         self.rect = self.image.get_rect(topleft=(x, y))
         self.mask = pygame.mask.from_surface(self.image)
