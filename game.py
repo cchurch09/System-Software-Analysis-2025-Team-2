@@ -95,10 +95,12 @@ class Game:
         else:
             right_paddle = paddle2.Paddle(630, 225, 20, 70, players[1].color)
             left_paddle = paddle2.Paddle(50, 225, 20, 70, players[0].color)
+        """
         balls = []
         left_paddle = paddle2.Paddle(50, (GAME_HEIGHT // 2) - (PADDLE_HEIGHT // 2), PADDLE_WIDTH, PADDLE_HEIGHT, players[0].color)
         right_paddle = paddle2.Paddle(GAME_WIDTH - 50 - PADDLE_WIDTH, (GAME_HEIGHT // 2) - (PADDLE_HEIGHT // 2), PADDLE_WIDTH, PADDLE_HEIGHT, players[1].color)
         ballProto = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
+        """
         for i in range(customGame.ballCount):
             ball = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
             ball_sprites.add(ball)
