@@ -134,6 +134,29 @@ class Game:
                         relative_intersect = (ball.rect.centery - paddle.rect.centery) / (paddle.height / 2)
                         bounce_strength = 2
                         ball.y_velocity = int(relative_intersect * bounce_strength)
+                        
+            # Keep ball within bounds of screen (Top and bottom)            
+            if ball.rect.top <= 0:
+                ball.rect.top = 0
+                ball.y_velocity *= -1
+
+            if ball.rect.bottom >= GAME_HEIGHT:
+                ball.rect.bottom = GAME_HEIGHT
+                ball.y_velocity *= -1
+
+            # Update score and reset ball if paddle misses ball
+            if ball.rect.right >= GAME_WIDTH:
+                player1_score += 1
+                ball.rect.center = (GAME_WIDTH // 2, GAME_HEIGHT // 2)
+                ball.x_velocity *= -1
+                ball.y_velocity = 0
+
+            elif ball.rect.left <= 0:
+                player2_score += 1  
+                ball.rect.center = (GAME_WIDTH // 2, GAME_HEIGHT // 2)
+                ball.x_velocity *= -1
+                ball.y_velocity = 0
+                
             ball_sprites.draw(GAME_WIN)
             GAME_WIN.fill((BLACK))
 
