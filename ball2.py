@@ -1,4 +1,6 @@
 import pygame
+from customization import customGame
+import random
 
 class Ball(pygame.sprite.Sprite):
     VEL = 5

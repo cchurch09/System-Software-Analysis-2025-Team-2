@@ -3,6 +3,7 @@ import pygame
 import paddle2
 import ball2
 import math
+import random
 from player import players
 from customMenu import customGame
 from ball2 import ball_sprites
@@ -24,7 +25,7 @@ PADDLE_WIDTH = 20
 PADDLE_HEIGHT = 70
 
 class Game:
-    def render(window, paddles, player1_score, player2_score, rally_score):
+    def render(self, window, paddles, player1_score, player2_score, rally_score):
         window.fill(BLACK)
 
         if customGame.rallyMode == True:
@@ -38,13 +39,6 @@ class Game:
             player2_score_text = GAME_FONT_2.render(f"{player2_score}", 1, players[1].color)
             window.blit(player1_score_text, (50, 20))
             window.blit(player2_score_text, (625, 20))
-
-        """
-        player1_text = player.player1.name
-        player2_text = player.player2.name
-        player1_score_text = pygame.font.Font('fonts\ozone\Ozone-xRRO.ttf', 50).render(f"{player1_score}", 1, (255, 255, 255))
-        player2_score_text = pygame.font.Font('fonts\ozone\Ozone-xRRO.ttf', 50).render(f"{player2_score}", 1, (255, 255, 255))
-        """
 
         p = 0
         for paddle in paddles:
@@ -60,30 +54,32 @@ class Game:
         ball_sprites.draw(GAME_WIN)
         pygame.display.update()
 
-    def paddle_movement(keys, left_paddle, right_paddle):
-        if keys[pygame.K_w] and left_paddle.rect.y - left_paddle.VELOCITY >= 0:
-            left_paddle.move(up=True)
-        if keys[pygame.K_s] and left_paddle.rect.y + left_paddle.VELOCITY + left_paddle.height <= GAME_HEIGHT:
-            left_paddle.move(up=False)
+    def paddle_movement(self, keys, left_paddle, right_paddle):
+        paddle_controls = {
+            pygame.K_w: (left_paddle, True),
+            pygame.K_s: (left_paddle, False),
+            pygame.K_UP: (right_paddle, True),
+            pygame.K_DOWN: (right_paddle, False),
+        }
 
-        if customGame.singleRally == False:
-            if keys[pygame.K_UP] and right_paddle.rect.y - right_paddle.VELOCITY >= 0:
-                right_paddle.move(up=True)
-            if keys[pygame.K_DOWN] and right_paddle.rect.y + right_paddle.VELOCITY + right_paddle.height <= GAME_HEIGHT:
-                right_paddle.move(up=False)
-        
-        # Rotation    
-        if customGame.paddleRotation == True:
-            if keys[pygame.K_a]: 
-                left_paddle.rotate(-5)
-            if keys[pygame.K_d]:
-                left_paddle.rotate(5)
+        for key, (paddle, up) in paddle_controls.items():
+            if keys[key]:
+                if up and paddle.rect.y - paddle.VELOCITY >= 0:
+                    paddle.move(up=True)
+                elif not up and paddle.rect.y + paddle.VELOCITY + paddle.height <= GAME_HEIGHT:
+                    paddle.move(up=False)
 
-            if customGame.singleRally == False:
-                if keys[pygame.K_LEFT]:
-                    right_paddle.rotate(-5)
-                if keys[pygame.K_RIGHT]:
-                    right_paddle.rotate(5)
+        if customGame.paddleRotation:
+            rotation_controls = {
+                pygame.K_a: left_paddle,
+                pygame.K_d: left_paddle,
+                pygame.K_LEFT: right_paddle,
+                pygame.K_RIGHT: right_paddle,
+            }
+            for key, paddle in rotation_controls.items():
+                if keys[key]:
+                    angle = -5 if key in (pygame.K_a, pygame.K_LEFT) else 5
+                    paddle.rotate(angle)
 
 
     def main(self):
@@ -99,12 +95,7 @@ class Game:
         else:
             right_paddle = paddle2.Paddle(630, 225, 20, 70, players[1].color)
             left_paddle = paddle2.Paddle(50, 225, 20, 70, players[0].color)
-        """
-        balls = []
-        left_paddle = paddle2.Paddle(50, (GAME_HEIGHT // 2) - (PADDLE_HEIGHT // 2), PADDLE_WIDTH, PADDLE_HEIGHT, players[0].color)
-        right_paddle = paddle2.Paddle(GAME_WIDTH - 50 - PADDLE_WIDTH, (GAME_HEIGHT // 2) - (PADDLE_HEIGHT // 2), PADDLE_WIDTH, PADDLE_HEIGHT, players[1].color)
-        ballProto = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
-        """
+
         for i in range(customGame.ballCount):
             ball = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
             ball_sprites.add(ball)
@@ -115,6 +106,11 @@ class Game:
 
         while run:
             clock.tick(100)
+
+            #filling screen black before rendering
+            GAME_WIN.fill(BLACK)
+
+            #Rendering paddles and scores
             self.render(GAME_WIN, [left_paddle, right_paddle], player1_score, player2_score, rally_score)
 
             for event in pygame.event.get():
@@ -135,13 +131,15 @@ class Game:
                     elif ball.rect.right > GAME_WIDTH:
                         player1_score += 1
                     ball.restart()  # Reset the ball position
-           
-           # Collision     
-            for paddle in [left_paddle, right_paddle]:
+                    ball.x_velocity = 5
+                    ball.y_velocity = 0
+
+                
+                # Collision detection
+                for paddle in [left_paddle, right_paddle]:
                     offset = (paddle.rect.x - ball.rect.x, paddle.rect.y - ball.rect.y)
                     if ball.mask.overlap(paddle.mask, offset):
                         print("Collision detected with paddle!")
-                        ball.x_velocity *= -1
                         '''
                         # Sticking fix
                         # Basically - if ball is moving right, keep it to the left of the paddle
@@ -151,34 +149,57 @@ class Game:
                             ball.rect.right = paddle.rect.left
                         '''    
                         # Where is the ball hitting the paddle?
-                        relative_intersect = (ball.rect.centery - paddle.rect.centery) / (paddle.height / 2)
+                        relative_intersect = (ball.rect.centery - paddle.rect.centery) / (paddle.rect.height / 2)
                         bounce_strength = 2
                         ball.y_velocity = int(relative_intersect * bounce_strength)
-  
-            # Keep ball within bounds of screen (Top and bottom)            
-            if ball.rect.top <= 0:
-                ball.rect.top = 0
-                ball.y_velocity *= -1
 
-            if ball.rect.bottom >= GAME_HEIGHT:
-                ball.rect.bottom = GAME_HEIGHT
-                ball.y_velocity *= -1
+                        # adding randomness to the reflection
+                        randomfactor = random.uniform(-1.5, 1.5)
+                        ball.y_velocity += int(randomfactor)
 
-            # Update score and reset ball if paddle misses ball
-            if ball.rect.right >= GAME_WIDTH:
-                player1_score += 1
-                ball.rect.center = (GAME_WIDTH // 2, GAME_HEIGHT // 2)
-                ball.x_velocity *= -1
-                ball.y_velocity = 0
-
-            elif ball.rect.left <= 0:
-                player2_score += 1  
-                ball.rect.center = (GAME_WIDTH // 2, GAME_HEIGHT // 2)
-                ball.x_velocity *= -1
-                ball.y_velocity = 0
+                        # reversing x velocity
+                        ball.x_velocity *= -1
                 
-            ball_sprites.draw(GAME_WIN)
-            GAME_WIN.fill((BLACK))
+                """
+                for paddle in [left_paddle, right_paddle]:
+                    offset = (paddle.rect.x - ball.rect.x, paddle.rect.y - ball.rect.y)
+                    if ball.mask.overlap(paddle.mask, offset):
+                        # Calculate the angle of reflection
+                        paddle_center_y = paddle.rect.centery
+                        hit_position = ball.rect.centery  # Y position where the ball hit the paddle
+                        relative_intersect = (hit_position - paddle_center_y) / (paddle.rect.height / 2)
 
-game1 = Game
-Game.main(game1)
+                        # Calculate the new angle based on the paddle's angle
+                        paddle_angle_rad = math.radians(paddle.angle)
+                        bounce_strength = 2
+                        ball.y_velocity = int(relative_intersect * bounce_strength) + int(math.sin(paddle_angle_rad) * bounce_strength)
+                        ball.x_velocity *= -1  # Reverse the x direction
+                """
+  
+                # Keep ball within bounds of screen (Top and bottom)            
+                if ball.rect.top <= 0:
+                    ball.rect.top = 0
+                    ball.y_velocity *= -1
+
+                if ball.rect.bottom >= GAME_HEIGHT:
+                    ball.rect.bottom = GAME_HEIGHT
+                    ball.y_velocity *= -1
+
+                # Update score and reset ball if paddle misses ball
+                if ball.rect.right >= GAME_WIDTH:
+                    player1_score += 1
+                    ball.rect.center = (GAME_WIDTH // 2, GAME_HEIGHT // 2)
+                    ball.x_velocity *= -1
+                    ball.y_velocity = 0
+
+                elif ball.rect.left <= 0:
+                    player2_score += 1  
+                    ball.rect.center = (GAME_WIDTH // 2, GAME_HEIGHT // 2)
+                    ball.x_velocity *= -1
+                    ball.y_velocity = 0
+                    
+            ball_sprites.draw(GAME_WIN)
+            pygame.display.update()
+
+game1 = Game()
+game1.main()
