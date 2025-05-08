@@ -202,4 +202,3 @@ class Game:
             pygame.display.update()
 
 game1 = Game()
-game1.main()

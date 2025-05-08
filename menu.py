@@ -13,6 +13,7 @@ import customMenu
 import player
 import pygame as pg
 from tkinter import messagebox
+from game import game1
 
 """
 This module actually initializes the main menu with the 3 main buttons to start the game
@@ -23,7 +24,7 @@ def main():
     mainMenu.title("Pong")
     mainMenu.geometry("500x500")
     welcomeMessage = tk.Label(mainMenu, text="Welcome to Pong!")
-    multiButton = tk.Button(mainMenu, text="Play Pygame Game", command=lambda: PongExample2.main())
+    multiButton = tk.Button(mainMenu, text="Play Pygame Game", command=lambda: game1.main())
     tkinterButton = tk.Button(mainMenu, text="Play tkinter game")
     registryButton = tk.Button(mainMenu, text="Register Players", command=lambda: registerPlayers.registerPlayers())
     customButton = tk.Button(mainMenu, text ="Customization Menu", command=lambda: customMenu.customMenu())

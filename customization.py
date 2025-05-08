@@ -16,6 +16,18 @@ class Customization():
         self.singleRally = False
         self.freePlay = False
 
+    def enable_paddleRotation(self):
+        self.paddleRotation = True
+
+    def disable_paddleRotation(self):
+        self.paddleRotation = False
+
+    def enable_rallyMode(self):
+        self.rallyMode = True
+    
+    def disable_rallyMode(self):
+        self.rallyMode = False
+
     def update_mode(self, selection):
         if selection == "1-Player Rally":
             self.singleRally = True
