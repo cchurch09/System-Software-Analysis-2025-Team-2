@@ -14,8 +14,8 @@ class Paddle(pygame.sprite.Sprite):
         self.height = height
         self.color = color
 
-    def render(self, window, color):
-        pygame.draw.rect(self.original_image, color, (0, 0, self.original_image.get_width(), self.original_image.get_height()))
+    def render(self, window):
+        pygame.draw.rect(self.original_image, self.color, (0, 0, self.original_image.get_width(), self.original_image.get_height()))
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.mask = pygame.mask.from_surface(self.image)
         window.blit(self.image, self.rect)
