@@ -41,7 +41,7 @@ class customMenu(tk.Tk):
         ballNum.pack()
         
         # Confirm button to set ball count in game
-        confirm_button = tk.Button(self, text="OK", command= self.confirm_settings())
+        confirm_button = tk.Button(self, text="OK", command=lambda: self.confirm_settings())
         confirm_button.pack()
 
     def enable_paddleRotation(self):
@@ -77,7 +77,6 @@ class customMenu(tk.Tk):
         print(f"Ball Count: {customGame.ballCount}")
         print(f"Ball Color: {customGame.ballColor}")
         print(f"Game Mode: {self.selected_mode.get()}")
-
         self.destroy()
         
 if __name__ == '__main__':

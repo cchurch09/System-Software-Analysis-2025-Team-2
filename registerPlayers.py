@@ -19,10 +19,10 @@ class registerPlayers(tk.Tk):
         registerMessage = tk.Label(self, text='Please enter player names: ')
         player1Label = tk.Label(self, text='Player 1: ')
         self.player1Entry = tk.Entry(self, textvariable='player1')
-        player1Color = tk.Button(self, text='Player 1 Color', command=lambda: self.chooseColor(players[0].color))
+        player1Color = tk.Button(self, text='Player 1 Color', command=lambda: self.chooseColor(0))
         player2Label = tk.Label(self, text='Player 2: ')
         self.player2Entry = tk.Entry(self, textvariable='player2')
-        player2Color = tk.Button(self, text='Player 2 Color', command=lambda: self.chooseColor(players[1].color))
+        player2Color = tk.Button(self, text='Player 2 Color', command=lambda: self.chooseColor(1))
         confirmButton = tk.Button(self, text='Confirm', command=lambda: self.confirmPlayers())
         registerMessage.pack()
         player1Label.pack()
@@ -33,11 +33,11 @@ class registerPlayers(tk.Tk):
         player2Color.pack()
         confirmButton.pack()
 
-    def chooseColor(self, playerColor):
+    def chooseColor(self, playerIndex):
         color_code = colorchooser.askcolor(title="Pick Player Color")
-        print(color_code)
-        playerColor = color_code[0]
-        print(playerColor)
+        if color_code[1]:
+            players[playerIndex].color = color_code[1]
+            print(f"Player {playerIndex + 1} color updated to: {players[playerIndex].color}")
 
     def confirmPlayers(self):
         print("confirmPlayers was called")

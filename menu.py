@@ -10,6 +10,7 @@ import tkinter as tk
 import PongExample2
 import registerPlayers
 import customMenu
+import game
 from game import game1
 
 """
@@ -36,8 +37,7 @@ def main():
     exitButton.pack()
     mainMenu.mainloop()
 
-def start_game(mainMenu):
-    mainMenu.destroy()
+def start_game():
     game1.main()
 
 

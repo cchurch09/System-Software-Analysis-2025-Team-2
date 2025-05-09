@@ -13,6 +13,7 @@ GAME_HEIGHT = 500
 GAME_WIN = pygame.display.set_mode((GAME_WIDTH, GAME_HEIGHT))
 pygame.display.set_caption("Pong")
 
+
 pygame.font.init()
 GAME_FONT_1 = pygame.font.Font('fonts\lcdsolid\LcdSolid-VPzB.ttf', 50)
 GAME_FONT_2 = pygame.font.Font('fonts\ozone\Ozone-xRRO.ttf', 50)
@@ -40,16 +41,9 @@ class Game:
             window.blit(player1_score_text, (50, 20))
             window.blit(player2_score_text, (625, 20))
 
-        p = 0
         for paddle in paddles:
             """print("Calling render paddles")"""
-            paddle.render(window, players[p].color)
-            if p == 0:
-                p = 1
-            if p == 1:
-                p = 0
-            else:
-                print("i index error")
+            paddle.render(window)
 
         ball_sprites.draw(GAME_WIN)
         pygame.display.update()
