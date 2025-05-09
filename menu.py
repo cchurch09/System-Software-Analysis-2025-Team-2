@@ -10,15 +10,13 @@ import tkinter as tk
 import PongExample2
 import registerPlayers
 import customMenu
-import player
-import pygame as pg
-from tkinter import messagebox
 from game import game1
 
 """
 This module actually initializes the main menu with the 3 main buttons to start the game
 change the name of the players, and to close the game.
 """
+
 def main():
     mainMenu = tk.Tk()
     mainMenu.title("Pong")
@@ -37,7 +35,10 @@ def main():
     customButton.pack()
     exitButton.pack()
     mainMenu.mainloop()
-    
+
+def start_game(mainMenu):
+    mainMenu.destroy()
+    game1.main()
 
 
 if __name__ == '__main__':

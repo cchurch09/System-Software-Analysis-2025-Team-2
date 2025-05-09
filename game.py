@@ -83,6 +83,7 @@ class Game:
 
 
     def main(self):
+        pygame.init()
         run = True
         clock = pygame.time.Clock()
 
@@ -140,6 +141,7 @@ class Game:
                     offset = (paddle.rect.x - ball.rect.x, paddle.rect.y - ball.rect.y)
                     if ball.mask.overlap(paddle.mask, offset):
                         print("Collision detected with paddle!")
+                        rally_score += 1
                         '''
                         # Sticking fix
                         # Basically - if ball is moving right, keep it to the left of the paddle
@@ -200,5 +202,7 @@ class Game:
                     
             ball_sprites.draw(GAME_WIN)
             pygame.display.update()
+
+        pygame.quit()
 
 game1 = Game()
