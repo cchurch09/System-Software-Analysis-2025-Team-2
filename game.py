@@ -36,6 +36,13 @@ class Game:
             rally_score_text = GAME_FONT_2.render(f"{rally_score}", 1, WHITE)
             window.blit(rally_score_text, (GAME_WIDTH//2, 20))
         elif customGame.rallyMode == False and customGame.singleRally == False:
+            # Displaying Player names
+            player1_name_text = GAME_FONT_2.render(players[0].name, 1, WHITE)
+            player2_name_text = GAME_FONT_2.render(players[1].name, 1, WHITE)
+            window.blit(player1_name_text, (50, 0))  # Position above player 1 score
+            window.blit(player2_name_text, (625, 0))  # Position above player 2 score
+
+            # Displaying Player scores
             player1_score_text = GAME_FONT_2.render(f"{player1_score}", 1, players[0].color)
             player2_score_text = GAME_FONT_2.render(f"{player2_score}", 1, players[1].color)
             window.blit(player1_score_text, (50, 20))
