@@ -8,10 +8,8 @@ Description: Program is designed to play a version of Pong that allows players
 
 from logging import root
 import tkinter as tk
-import PongExample2
 import registerPlayers
 import customMenu
-import game
 from game import game1
 from PIL import Image, ImageTk
 
@@ -35,10 +33,9 @@ def main():
 
     image_label.pack()
 
-
+    # creating welcome label and buttons
     welcomeMessage = tk.Label(mainMenu, text="Welcome to Pong!")
     multiButton = tk.Button(mainMenu, text="Play Pygame Game", command=lambda: game1.main())
-    #tkinterButton = tk.Button(mainMenu, text="Play tkinter game")
     registryButton = tk.Button(mainMenu, text="Register Players", command=lambda: registerPlayers.registerPlayers())
     customButton = tk.Button(mainMenu, text ="Customization Menu", command=lambda: customMenu.customMenu())
     exitButton = tk.Button(mainMenu, text="Exit", command=mainMenu.quit)
@@ -46,7 +43,6 @@ def main():
     
     welcomeMessage.pack()
     multiButton.pack()
-    #tkinterButton.pack()
     registryButton.pack()
     customButton.pack()
     exitButton.pack()
@@ -54,5 +50,6 @@ def main():
     
 def start_game():
     game1.main()  
+    
 if __name__ == '__main__':
     main()

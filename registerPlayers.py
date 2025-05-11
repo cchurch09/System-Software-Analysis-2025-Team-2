@@ -33,12 +33,14 @@ class registerPlayers(tk.Tk):
         player2Color.pack()
         confirmButton.pack()
 
+    # allows each player to choose their own color
     def chooseColor(self, playerIndex):
         color_code = colorchooser.askcolor(title="Pick Player Color")
         if color_code[1]:
             players[playerIndex].color = color_code[1]
             print(f"Player {playerIndex + 1} color updated to: {players[playerIndex].color}")
 
+    # confirms the players names and their wins/losses an earlier feature that got cut due to time and focus on the game modes
     def confirmPlayers(self):
         print("confirmPlayers was called")
         if players[0].name != self.player1Entry.get():

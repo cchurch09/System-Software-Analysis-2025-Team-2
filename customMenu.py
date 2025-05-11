@@ -50,6 +50,7 @@ class customMenu(tk.Tk):
     def disable_paddleRotation(self):
         self.paddleRotation = False
 
+    # This segment allows there to only be one button to manage the paddle rotation
     def toggle_paddle_rotation(self):
         self.paddle_rotation_enabled = not self.paddle_rotation_enabled
         customGame.paddleRotation = self.paddle_rotation_enabled
@@ -58,15 +59,18 @@ class customMenu(tk.Tk):
         else:
             self.paddle_rotation_button.config(text="Enable Rotating Paddles")
 
+    # this allows this menu to change the ball's color
     def ballColor(self):
         color_code = colorchooser.askcolor(title="Pick Ball Color")
         if color_code[1]:
             customGame.ballColor = color_code[1]
             print(f"Selected ball color: {customGame.ballColor}")
 
+    # changes the numer of balls allowed to be used in the game
     def update_ball_count(self, value):
         customGame.ballCount = int(value)
 
+    # tells the game which game mode is active
     def update_game_mode(self, selection):
         customGame.update_mode(selection)
 

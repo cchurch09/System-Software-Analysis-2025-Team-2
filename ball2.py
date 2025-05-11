@@ -6,6 +6,7 @@ class Ball(pygame.sprite.Sprite):
     VEL = 5
 
     def __init__(self, x, y, radius, color):
+        # initializing all values for the ball
         super().__init__()
         self.radius = radius
         self.x = self.center_x = x
@@ -18,16 +19,19 @@ class Ball(pygame.sprite.Sprite):
         self.x_velocity = self.VEL
         self.y_velocity = 0
 
+    # rendering function to allow the balls to be seen
     def render(self, window):
         print("render ball called")
         pygame.draw.circle(self.image, self.color, (self.center_x, self.center_y), self.radius)
         self.rect = self.image.get_rect(center=(self.center_x, self.center_y))
         window.blit(self.image, self.rect)
 
+    # allows the ball to move
     def move(self):
         self.rect.x += self.x_velocity
         self.rect.y += self.y_velocity
 
+    # restarts the ball
     def restart(self):
         self.x = self.center_x
         self.y = self.center_y

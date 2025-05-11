@@ -8,7 +8,8 @@ Purpose: This module facilitates all of the customization options via boolean va
 
 class Customization():
     def __init__(self):
-        self.paddleRotation = True
+        # initializing all customizatoin values
+        self.paddleRotation = False
         self.multiBall = False
         self.ballCount = 1
         self.ballColor = (255, 255, 255)
@@ -16,6 +17,7 @@ class Customization():
         self.singleRally = False
         self.freePlay = False
 
+    # allows the game mode to change properly
     def update_mode(self, selection):
         if selection == "1-Player Rally":
             self.singleRally = True

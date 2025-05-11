@@ -2,6 +2,7 @@ import pygame as pg
 
 class Player():
     def __init__(self, name, color):
+        # initializing initial calues
         self.name = name
         self.color = color
         self.wins = 0

@@ -23,38 +23,37 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 PADDLE_WIDTH = 20
-PADDLE_HEIGHT = 70
+PADDLE_HEIGHT = 90
 
 class Game:
     def render(self, window, paddles, player1_score, player2_score, rally_score):
         window.fill(BLACK)
 
+        # tells the game what to render based on selected game mode
         if customGame.rallyMode == True:
-            rally_score_text = GAME_FONT_2.render(f"{rally_score}", 1, WHITE)
-            window.blit(rally_score_text, (GAME_WIDTH//2, 20))
+            rally_score_text = GAME_FONT_2.render(f"{players[0].name}    {rally_score}    {players[1].name}", 1, WHITE)
+            rally_text_rect = rally_score_text.get_rect(center=(GAME_WIDTH // 2, 20))
+            window.blit(rally_score_text, rally_text_rect)
         if customGame.singleRally == True:
             rally_score_text = GAME_FONT_2.render(f"{rally_score}", 1, WHITE)
             window.blit(rally_score_text, (GAME_WIDTH//2, 20))
         elif customGame.rallyMode == False and customGame.singleRally == False:
             # Displaying Player names
-            player1_name_text = GAME_FONT_2.render(players[0].name, 1, WHITE)
-            player2_name_text = GAME_FONT_2.render(players[1].name, 1, WHITE)
-            window.blit(player1_name_text, (50, 0))  # Position above player 1 score
-            window.blit(player2_name_text, (625, 0))  # Position above player 2 score
+            score_text = f"{players[0].name} {player1_score} - {player2_score} {players[1].name}"
+            score_display = GAME_FONT_2.render(score_text, 1, WHITE)
+            text_rect = score_display.get_rect(center=(GAME_WIDTH // 2, 20))  # Center the text
+            window.blit(score_display, text_rect)  # Draw the text in the center
 
-            # Displaying Player scores
-            player1_score_text = GAME_FONT_2.render(f"{player1_score}", 1, players[0].color)
-            player2_score_text = GAME_FONT_2.render(f"{player2_score}", 1, players[1].color)
-            window.blit(player1_score_text, (50, 20))
-            window.blit(player2_score_text, (625, 20))
-
+        # tells the game ro render the paddles
         for paddle in paddles:
             """print("Calling render paddles")"""
             paddle.render(window)
 
+        # tells the game to render the balls as a full group of sprites
         ball_sprites.draw(GAME_WIN)
         pygame.display.update()
 
+    # paddle controls
     def paddle_movement(self, keys, left_paddle, right_paddle):
         paddle_controls = {
             pygame.K_w: (left_paddle, True),
@@ -63,6 +62,7 @@ class Game:
             pygame.K_DOWN: (right_paddle, False),
         }
 
+        # paddle movement handling
         for key, (paddle, up) in paddle_controls.items():
             if keys[key]:
                 if up and paddle.rect.y - paddle.VELOCITY >= 0:
@@ -70,7 +70,8 @@ class Game:
                 elif not up and paddle.rect.y + paddle.VELOCITY + paddle.height <= GAME_HEIGHT:
                     paddle.move(up=False)
 
-        if customGame.paddleRotation:
+        # paddle rotation handling
+        if customGame.paddleRotation == True:
             rotation_controls = {
                 pygame.K_a: left_paddle,
                 pygame.K_d: left_paddle,
@@ -82,30 +83,34 @@ class Game:
                     angle = -5 if key in (pygame.K_a, pygame.K_LEFT) else 5
                     paddle.rotate(angle)
 
-
+    # main function that runs the game
     def main(self):
         pygame.init()
         run = True
         clock = pygame.time.Clock()
 
+        # Tells the game which paddles to render based on the game mode
         if customGame.singleRally == True:
             right_paddle = paddle2.Paddle(630, 0, 20, GAME_HEIGHT, players[1].color)
-            left_paddle = paddle2.Paddle(50, 225, 20, 70, players[0].color)
+            left_paddle = paddle2.Paddle(50, 225, PADDLE_WIDTH, PADDLE_HEIGHT, players[0].color)
         elif customGame.rallyMode == True:
-            right_paddle = paddle2.Paddle(630, 225, 20, 70, players[1].color)
-            left_paddle = paddle2.Paddle(50, 225, 20, 70, players[0].color)
+            right_paddle = paddle2.Paddle(630, 225, PADDLE_WIDTH, PADDLE_HEIGHT, players[1].color)
+            left_paddle = paddle2.Paddle(50, 225, PADDLE_WIDTH, PADDLE_HEIGHT, players[0].color)
         else:
-            right_paddle = paddle2.Paddle(630, 225, 20, 70, players[1].color)
-            left_paddle = paddle2.Paddle(50, 225, 20, 70, players[0].color)
+            right_paddle = paddle2.Paddle(630, 225, PADDLE_WIDTH, PADDLE_HEIGHT, players[1].color)
+            left_paddle = paddle2.Paddle(50, 225, PADDLE_WIDTH, PADDLE_HEIGHT, players[0].color)
 
+        # creates a number of balls depending on how many balls in ballcount
         for i in range(customGame.ballCount):
             ball = ball2.Ball(GAME_WIDTH//2, GAME_HEIGHT//2, 5, customGame.ballColor)
             ball_sprites.add(ball)
 
+        # initial score settings
         player1_score = 0
         player2_score = 0
         rally_score = 0
 
+        # main gameplay loop
         while run:
             clock.tick(100)
 
@@ -115,14 +120,18 @@ class Game:
             #Rendering paddles and scores
             self.render(GAME_WIN, [left_paddle, right_paddle], player1_score, player2_score, rally_score)
 
+            # allos the game to quit properly
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+                    pygame.quit()
                     break
             
+            #pygame movement calls
             keys = pygame.key.get_pressed()
             self.paddle_movement(keys, left_paddle, right_paddle)
 
+            # handles movement for all of the balls and checking whether they are in bounds or not
             for ball in ball_sprites:
                 ball.move()
 
@@ -132,6 +141,10 @@ class Game:
                         player2_score += 1
                     elif ball.rect.right > GAME_WIDTH:
                         player1_score += 1
+                    elif customGame.rallyMode == True:
+                        rally_score = 0
+                    elif customGame.singleRally == True:
+                        rally_score = 0
                     ball.restart()  # Reset the ball position
                     ball.x_velocity = 5
                     ball.y_velocity = 0
@@ -157,7 +170,7 @@ class Game:
                         ball.y_velocity = int(relative_intersect * bounce_strength)
 
                         # adding randomness to the reflection
-                        randomfactor = random.uniform(-1.5, 1.5)
+                        randomfactor = random.uniform(-1.75, 1.75)
                         ball.y_velocity += int(randomfactor)
 
                         # reversing x velocity
@@ -201,9 +214,32 @@ class Game:
                     ball.x_velocity *= -1
                     ball.y_velocity = 0
                     
+            # drawing al of the balls in the game
             ball_sprites.draw(GAME_WIN)
             pygame.display.update()
 
+            # determines which player won or prevents the game from ending during free play mode
+            won = False
+            if customGame.freePlay == False:
+                if player1_score >= WIN_SCORE:
+                    won = True
+                    win_text = (f"{players[0].name} WON!")
+                elif player2_score >= WIN_SCORE:
+                    won = True
+                    win_text = (f"{players[1].name} WON!")
+
+            # the actual win screen
+            if won:
+                text = GAME_FONT_2.render(win_text, 1, WHITE)
+                GAME_WIN.blit(text, (GAME_WIDTH//2 - text.get_width() // 2, GAME_HEIGHT//2 - text.get_height() //2))
+                pygame.display.update()
+                pygame.time.delay(5000)
+                ball.restart()
+                for paddle in [left_paddle, right_paddle]:
+                    paddle.restart()
+                player1_score = 0
+                player2_score = 0
         pygame.quit()
+        pygame.QUIT
 
 game1 = Game()
