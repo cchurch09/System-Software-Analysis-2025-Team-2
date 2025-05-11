@@ -1,3 +1,11 @@
+"""
+File Name: customMenu.py
+Author: Team 2
+Date last updated: 5/10/2025
+Purpose: This module uses the customization module with a tkinter GUI to allow players to customize
+their game experience
+"""
+
 import tkinter as tk
 import player
 import ball2

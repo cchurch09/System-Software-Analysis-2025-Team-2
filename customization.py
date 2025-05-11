@@ -1,6 +1,6 @@
 """
 File Name: customization.py
-Author: Brenden Melody
+Author: Team 2
 Date last updated: 5/2/2025
 Purpose: This module facilitates all of the customization options via boolean values
 """

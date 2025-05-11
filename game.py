@@ -1,8 +1,13 @@
+"""
+File Name: customization.py
+Author: Team 2
+Date last updated: 5/2/2025
+Purpose: This module controls all gameplay and allows the game to function properly
+"""
+
 import pygame
-#import paddle
 import paddle2
 import ball2
-import math
 import random
 from player import players
 from customMenu import customGame

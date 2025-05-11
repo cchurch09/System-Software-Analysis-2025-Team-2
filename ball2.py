@@ -1,6 +1,12 @@
+"""
+File Name: customization.py
+Author: Team 2
+Date last updated: 5/2/2025
+Purpose: This module controls the balls and allows them to function in game, also allows the player to customize the ball's color
+"""
+
 import pygame
 from customization import customGame
-import random
 
 class Ball(pygame.sprite.Sprite):
     VEL = 5

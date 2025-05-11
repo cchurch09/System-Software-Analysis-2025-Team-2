@@ -1,9 +1,9 @@
 """
 Project Name: Group2Project.py
 Author: Brenden Melody, Darcy Ralstin, Cailli Church
-Date last updated: 13 April 2025
+Date last updated: 5/10/2025
 Description: Program is designed to play a version of Pong that allows players
-            to choose their names and colors.
+            to choose their names and colors. This module operates the main menu to actually start the game
 """
 
 from logging import root
@@ -50,6 +50,6 @@ def main():
     
 def start_game():
     game1.main()  
-    
+
 if __name__ == '__main__':
     main()

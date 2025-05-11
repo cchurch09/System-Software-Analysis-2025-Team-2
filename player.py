@@ -1,3 +1,10 @@
+"""
+File Name: customization.py
+Author: Team 2
+Date last updated: 5/2/2025
+Purpose: This module initializes the players and all of their values in game, also allows all of their values to be modified
+"""
+
 import pygame as pg
 
 class Player():

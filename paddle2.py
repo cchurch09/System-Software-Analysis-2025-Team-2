@@ -1,3 +1,10 @@
+"""
+File Name: customization.py
+Author: Team 2
+Date last updated: 5/10/2025
+Purpose: This module contains all of the functions for how the paddles work and what values they have including their color
+"""
+
 import pygame
 
 class Paddle(pygame.sprite.Sprite):
